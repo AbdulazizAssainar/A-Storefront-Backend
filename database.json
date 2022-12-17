@@ -1,0 +1,16 @@
+{
+    "dev": {
+      "driver": "pg",
+      "host": "localhost",
+      "database": "udacity",
+      "user": "localhost",
+      "password": "Kunhi-1234"
+    },
+    "test": {
+      "driver": "pg",
+      "host": "localhost",
+      "database": "udacity_test",
+      "user": "localhost",
+      "password": "Kunhi-1234"
+    }
+  }
