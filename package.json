@@ -11,7 +11,7 @@
     "build": "npx tsc",
     "jasmine": "jasmine-ts",
     "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess \"node ./dist/server.js\"",
-    "test": "ENV=test db-migrate --env test up && npm run jasmine && db-migrate db:drop test",
+    "test": "env ENV=test db-migrate --env test up && npm run jasmine && db-migrate db:drop test",
     "clean": "npm run prettier && npm run lint",
     "tsc": "tsc"
   },
