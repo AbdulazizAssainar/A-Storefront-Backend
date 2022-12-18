@@ -3,14 +3,14 @@
       "driver": "pg",
       "host": "localhost",
       "database": "udacity",
-      "user": "localhost",
+      "user": "postgres",
       "password": "Kunhi-1234"
     },
     "test": {
       "driver": "pg",
       "host": "localhost",
       "database": "udacity_test",
-      "user": "localhost",
+      "user": "postgres",
       "password": "Kunhi-1234"
     }
   }
