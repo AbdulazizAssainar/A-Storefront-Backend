@@ -5,7 +5,7 @@ import { pagesPath } from '../../utilities/paths'
 const login: express.Application = express()
 
 login.get('/', function (req: Request, res: Response) {
-  res.sendFile(path.join(pagesPath, '/login.html'))
+  res.send('login route')
 })
 
 export default login

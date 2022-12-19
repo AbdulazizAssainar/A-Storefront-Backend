@@ -5,7 +5,7 @@ import { pagesPath } from '../../utilities/paths'
 const signup: express.Application = express()
 
 signup.get('/', function (req: Request, res: Response) {
-  res.sendFile(path.join(pagesPath, '/signup.html'))
+  res.send('signup route')
 })
 
 export default signup

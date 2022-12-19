@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\abdla\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add dotenv –save
+  C:\Program Files\nodejs\node.exe C:\Users\abdla\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add super-test --dev
 
 PATH: 
   C:\Program Files (x86)\Common Files\Intel\Shared Libraries\redist\intel64\compiler;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\Users\abdla\AppData\Local\Microsoft\WindowsApps;C:\Users\abdla\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\abdla\AppData\Roaming\npm;C:\Program Files\PostgreSQL\15\bin;C:\Program Files\PostgreSQL\15\lib;
@@ -14,15 +14,17 @@ Platform:
   win32 x64
 
 Trace: 
-  TypeError [ERR_UNESCAPED_CHARACTERS]: https://registry.yarnpkg.com/–save: Request path contains unescaped characters
-      at new NodeError (node:internal/errors:393:5)
-      at new ClientRequest (node:_http_client:182:13)
-      at Object.request (node:https:360:10)
-      at module.exports.Request.start (C:\Users\abdla\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:141452:32)
-      at module.exports.Request.end (C:\Users\abdla\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:142211:10)
-      at end (C:\Users\abdla\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:141265:14)
-      at Immediate.<anonymous> (C:\Users\abdla\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:141279:7)
-      at process.processImmediate (node:internal/timers:471:21)
+  Error: https://registry.yarnpkg.com/super-test: Not found
+      at params.callback [as _callback] (C:\Users\abdla\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:66145:18)
+      at self.callback (C:\Users\abdla\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:140890:22)
+      at Request.emit (node:events:513:28)
+      at Request.<anonymous> (C:\Users\abdla\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:141862:10)
+      at Request.emit (node:events:513:28)
+      at IncomingMessage.<anonymous> (C:\Users\abdla\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:141784:12)
+      at Object.onceWrapper (node:events:627:28)
+      at IncomingMessage.emit (node:events:525:35)
+      at endReadableNT (node:internal/streams/readable:1359:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
 
 npm manifest: 
   {
@@ -35,11 +37,11 @@ npm manifest:
       "src": "nodemon src/index.ts",
       "prettier": "prettier --config .prettierrc src/**/*.ts --write",
       "lint": "eslint . --ext .ts --fix --quiet",
-      "build": "npx tsc",
-      "jasmine": "jasmine-ts",
-      "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess \"node ./dist/server.js\"",
-      "test": "ENV=test db-migrate --env test up && npm run jasmine && db-migrate db:drop test",
       "clean": "npm run prettier && npm run lint",
+      "jasmine": "npm run build && jasmine-ts",
+      "build": "npx tsc",
+      "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess \"node ./dist/server.js\"",
+      "test": "db-migrate db:create udacity_test && db-migrate --env test up && npm run jasmine && db-migrate db:drop udacity_test",
       "tsc": "tsc"
     },
     "author": "Udacity",
@@ -49,6 +51,7 @@ npm manifest:
       "db-migrate": "^0.11.13",
       "db-migrate-pg": "^1.2.2",
       "dotenv": "^16.0.3",
+      "env-cmd": "^10.1.0",
       "eslint": "^8.0.1",
       "express": "^4.18.2",
       "node-json-db": "^2.1.3",
@@ -61,6 +64,7 @@ npm manifest:
       "@types/jasmine": "^3.6.3",
       "@types/pg": "^7.14.7",
       "@typescript-eslint/eslint-plugin": "^5.0.0",
+      "cross-env": "^7.0.3",
       "eslint-config-standard-with-typescript": "^24.0.0",
       "eslint-plugin-import": "^2.25.2",
       "eslint-plugin-n": "^15.0.0",
@@ -92,22 +96,22 @@ Lockfile:
     resolved "https://registry.npmjs.org/@colors/colors/-/colors-1.5.0.tgz"
     integrity sha512-ooWCrlZP11i8GImSjTHYHLkvFDP48nS4+204nGb1RiX/WXYHmJA2III9/e2DWVabCESdW7hBAEzHRqUn9OUVvQ==
   
-  "@eslint/eslintrc@^1.3.3":
-    version "1.3.3"
-    resolved "https://registry.npmjs.org/@eslint/eslintrc/-/eslintrc-1.3.3.tgz"
-    integrity sha512-uj3pT6Mg+3t39fvLrj8iuCIJ38zKO9FpGtJ4BBJebJhEwjoT+KLVNCcHT5QC9NGRIEi7fZ0ZR8YRb884auB4Lg==
+  "@eslint/eslintrc@^1.4.0":
+    version "1.4.0"
+    resolved "https://registry.npmjs.org/@eslint/eslintrc/-/eslintrc-1.4.0.tgz"
+    integrity sha512-7yfvXy6MWLgWSFsLhz5yH3iQ52St8cdUY6FoGieKkRDVxuxmrNuUetIuu6cmjNWwniUHiWXjxCr5tTXDrbYS5A==
     dependencies:
       ajv "^6.12.4"
       debug "^4.3.2"
       espree "^9.4.0"
-      globals "^13.15.0"
+      globals "^13.19.0"
       ignore "^5.2.0"
       import-fresh "^3.2.1"
       js-yaml "^4.1.0"
       minimatch "^3.1.2"
       strip-json-comments "^3.1.1"
   
-  "@humanwhocodes/config-array@^0.11.6":
+  "@humanwhocodes/config-array@^0.11.8":
     version "0.11.8"
     resolved "https://registry.npmjs.org/@humanwhocodes/config-array/-/config-array-0.11.8.tgz"
     integrity sha512-UybHIJzJnR5Qc/MsD9Kr+RpO2h+/P1GhOwdiLPXK5TWk5sgTdu88bTD9UP+CKbPPh5Rni1u0GjAdYQLemG8g+g==
@@ -202,9 +206,9 @@ Lockfile:
     integrity sha512-Y4XFY5VJAuw0FgAqPNd6NNoV44jbq9Bz2L7Rh/J6jLTiHBSBJa9fxqQIvkIld4GsoDOcCbvzOUAbLPsSKKg+uA==
   
   "@types/node@*":
-    version "18.11.15"
-    resolved "https://registry.npmjs.org/@types/node/-/node-18.11.15.tgz"
-    integrity sha512-VkhBbVo2+2oozlkdHXLrb3zjsRkpdnaU2bXmX8Wgle3PUi569eLRaHGlgETQHR7lLL1w7GiG3h9SnePhxNDecw==
+    version "18.11.16"
+    resolved "https://registry.npmjs.org/@types/node/-/node-18.11.16.tgz"
+    integrity sha512-6T7P5bDkRhqRxrQtwj7vru+bWTpelgtcETAZEUSdq0YISKz8WKdoBukQLYQQ6DFHvU9JRsbFq0JH5C51X2ZdnA==
   
   "@types/pg@^7.14.7":
     version "7.14.11"
@@ -585,6 +589,11 @@ Lockfile:
     resolved "https://registry.npmjs.org/colors/-/colors-1.4.0.tgz"
     integrity sha512-a+UqTh4kgZg/SlGvfbzDHpgRu7AAQOmmqRHJnxhRZICKFUT91brVhNNt58CMWU9PsBbv3PDCZUHbVxuDiH2mtA==
   
+  commander@^4.0.0:
+    version "4.1.1"
+    resolved "https://registry.yarnpkg.com/commander/-/commander-4.1.1.tgz#9fd602bd936294e9e9ef46a3f4d6964044b18068"
+    integrity sha512-NOKm8xhkzAjzFx8B2v5OAHT+u5pRQc2UCa2Vq9jYL/31o2wi9mxBA7LIFs3sV5VSC49z6pEhfbMULvShKj26WA==
+  
   concat-map@0.0.1:
     version "0.0.1"
     resolved "https://registry.npmjs.org/concat-map/-/concat-map-0.0.1.tgz"
@@ -614,7 +623,7 @@ Lockfile:
   
   cpu-features@0.0.2:
     version "0.0.2"
-    resolved "https://registry.npmjs.org/cpu-features/-/cpu-features-0.0.2.tgz"
+    resolved "https://registry.yarnpkg.com/cpu-features/-/cpu-features-0.0.2.tgz#9f636156f1155fd04bdbaa028bb3c2fbef3cea7a"
     integrity sha512-/2yieBqvMcRj8McNzkycjW2v3OIUOibBfd2dLEJ0nWts8NobAxwiyw9phVNS6oDL8x8tz9F7uNVFEVpJncQpeA==
     dependencies:
       nan "^2.14.1"
@@ -624,7 +633,14 @@ Lockfile:
     resolved "https://registry.npmjs.org/create-require/-/create-require-1.1.1.tgz"
     integrity sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==
   
-  cross-spawn@^7.0.2, cross-spawn@^7.0.3:
+  cross-env@^7.0.3:
+    version "7.0.3"
+    resolved "https://registry.yarnpkg.com/cross-env/-/cross-env-7.0.3.tgz#865264b29677dc015ba8418918965dd232fc54cf"
+    integrity sha512-+/HKd6EgcQCJGh2PSjZuUitQBQynKor4wrFbRg4DtAgS1aWO+gU52xpH7M9ScGgXSYmAVS9bIJ8EzuaGw0oNAw==
+    dependencies:
+      cross-spawn "^7.0.1"
+  
+  cross-spawn@^7.0.0, cross-spawn@^7.0.1, cross-spawn@^7.0.2, cross-spawn@^7.0.3:
     version "7.0.3"
     resolved "https://registry.npmjs.org/cross-spawn/-/cross-spawn-7.0.3.tgz"
     integrity sha512-iRDPJKUPVEND7dHPO8rkbOnPpyDygcDFtWjpeWNCgy8WP2rXcxXL8TskReQl6OrB2G7+UJrags1q15Fudc7G6w==
@@ -763,7 +779,7 @@ Lockfile:
   
   dotenv@^16.0.3:
     version "16.0.3"
-    resolved "https://registry.npmjs.org/dotenv/-/dotenv-16.0.3.tgz"
+    resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.0.3.tgz#115aec42bac5053db3c456db30cc243a5a836a07"
     integrity sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==
   
   dotenv@^5.0.1:
@@ -790,6 +806,14 @@ Lockfile:
     version "1.0.2"
     resolved "https://registry.npmjs.org/encodeurl/-/encodeurl-1.0.2.tgz"
     integrity sha512-TPJXq8JqFaVYm2CWmPvnP2Iyo4ZSM7/QKcSmuMLDObfpH5fi7RUGmd/rTDf+rut/saiDiQEeVTNgAmJEdAOx0w==
+  
+  env-cmd@^10.1.0:
+    version "10.1.0"
+    resolved "https://registry.yarnpkg.com/env-cmd/-/env-cmd-10.1.0.tgz#c7f5d3b550c9519f137fdac4dd8fb6866a8c8c4b"
+    integrity sha512-mMdWTT9XKN7yNth/6N6g2GuKuJTsKMDHlQFUDacb/heQRRWOTIZ42t1rMHnQu4jYxU1ajdTeJM+9eEETlqToMA==
+    dependencies:
+      commander "^4.0.0"
+      cross-spawn "^7.0.0"
   
   es-abstract@^1.19.0, es-abstract@^1.20.4:
     version "1.20.5"
@@ -994,12 +1018,12 @@ Lockfile:
     integrity sha512-mQ+suqKJVyeuwGYHAdjMFqjCyfl8+Ldnxuyp3ldiMBFKkvytrXUZWaiPCEav8qDHKty44bD+qV1IP4T+w+xXRA==
   
   eslint@^8.0.1:
-    version "8.29.0"
-    resolved "https://registry.npmjs.org/eslint/-/eslint-8.29.0.tgz"
-    integrity sha512-isQ4EEiyUjZFbEKvEGJKKGBwXtvXX+zJbkVKCgTuB9t/+jUBcy8avhkEwWJecI15BkRkOYmvIM5ynbhRjEkoeg==
+    version "8.30.0"
+    resolved "https://registry.npmjs.org/eslint/-/eslint-8.30.0.tgz"
+    integrity sha512-MGADB39QqYuzEGov+F/qb18r4i7DohCDOfatHaxI2iGlPuC65bwG2gxgO+7DkyL38dRFaRH7RaRAgU6JKL9rMQ==
     dependencies:
-      "@eslint/eslintrc" "^1.3.3"
-      "@humanwhocodes/config-array" "^0.11.6"
+      "@eslint/eslintrc" "^1.4.0"
+      "@humanwhocodes/config-array" "^0.11.8"
       "@humanwhocodes/module-importer" "^1.0.1"
       "@nodelib/fs.walk" "^1.2.8"
       ajv "^6.10.0"
@@ -1018,7 +1042,7 @@ Lockfile:
       file-entry-cache "^6.0.1"
       find-up "^5.0.0"
       glob-parent "^6.0.2"
-      globals "^13.15.0"
+      globals "^13.19.0"
       grapheme-splitter "^1.0.4"
       ignore "^5.2.0"
       import-fresh "^3.0.0"
@@ -1321,7 +1345,7 @@ Lockfile:
       once "^1.3.0"
       path-is-absolute "^1.0.0"
   
-  globals@^13.15.0:
+  globals@^13.19.0:
     version "13.19.0"
     resolved "https://registry.npmjs.org/globals/-/globals-13.19.0.tgz"
     integrity sha512-dkQ957uSRWHw7CFXLUtUHQI3g3aWApYhfNR2O6jn/907riyTYKVBmxYVROkBcY614FSSeSJh7Xm7SrUWCxvJMQ==
@@ -1784,12 +1808,12 @@ Lockfile:
     resolved "https://registry.npmjs.org/ms/-/ms-2.0.0.tgz"
     integrity sha512-Tpp60P6IUJDTuOq/5Z8cdskzJujfwqfOTkrwIwj7IRISpnkJnT6SyJ4PCPnGMoFjC9ddhal5KVIYtAt97ix05A==
   
-  ms@2.1.2:
+  ms@2.1.2, ms@^2.1.1:
     version "2.1.2"
     resolved "https://registry.npmjs.org/ms/-/ms-2.1.2.tgz"
     integrity sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==
   
-  ms@2.1.3, ms@^2.1.1:
+  ms@2.1.3:
     version "2.1.3"
     resolved "https://registry.npmjs.org/ms/-/ms-2.1.3.tgz"
     integrity sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==
@@ -1801,7 +1825,7 @@ Lockfile:
   
   nan@^2.14.1, nan@^2.15.0:
     version "2.17.0"
-    resolved "https://registry.npmjs.org/nan/-/nan-2.17.0.tgz"
+    resolved "https://registry.yarnpkg.com/nan/-/nan-2.17.0.tgz#c0150a2368a182f033e9aa5195ec76ea41a199cb"
     integrity sha512-2ZTgtl0nJsO0KQCjEpxcIr5D+Yv90plTitZt9JBfQvVJDS5seMl3FOvsh3+9CoYWXf/1l5OaZzzF6nDm4cagaQ==
   
   natural-compare-lite@^1.4.0:
@@ -2102,7 +2126,7 @@ Lockfile:
   
   prettier@^2.8.1:
     version "2.8.1"
-    resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.8.1.tgz#4e1fd11c34e2421bc1da9aea9bd8127cd0a35efc"
+    resolved "https://registry.npmjs.org/prettier/-/prettier-2.8.1.tgz"
     integrity sha512-lqGoSJBQNJidqCHE80vqZJHWHRFoNYsSpP9AjFhlhi9ODCJA541svILes/+/1GM3VaL/abZi7cpFzOpdR9UPKg==
   
   prompt@^1.0.0:
@@ -2607,7 +2631,7 @@ Lockfile:
   
   typescript@^4.9.4:
     version "4.9.4"
-    resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.9.4.tgz#a2a3d2756c079abda241d75f149df9d561091e78"
+    resolved "https://registry.npmjs.org/typescript/-/typescript-4.9.4.tgz"
     integrity sha512-Uz+dTXYzxXXbsFpM86Wh3dKCxrQqUcVMxwU54orwlJjOpO3ao8L7j5lH+dWfTwgCwIuM9GQ2kvVotzYJMXTBZg==
   
   unbox-primitive@^1.0.2:

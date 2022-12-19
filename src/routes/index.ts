@@ -7,7 +7,7 @@ import { pagesPath } from '../utilities/paths'
 const routes: express.Application = express()
 
 routes.get('/', function (req: Request, res: Response) {
-  res.sendFile(path.join(pagesPath, '/index.html'))
+  res.send('Index route')
 })
 
 routes.use('/signup', signup)

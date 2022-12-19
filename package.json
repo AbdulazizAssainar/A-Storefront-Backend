@@ -9,10 +9,10 @@
     "prettier": "prettier --config .prettierrc src/**/*.ts --write",
     "lint": "eslint . --ext .ts --fix --quiet",
     "clean": "npm run prettier && npm run lint",
-    "jasmine": "jasmine-ts",
+    "jasmine": "npm run build && jasmine-ts",
     "build": "npx tsc",
     "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess \"node ./dist/server.js\"",
-    "test": "db-migrate --env test up && npm run jasmine && db-migrate db:drop test",
+    "test": "db-migrate db:create udacity_test && db-migrate --env test up && npm run jasmine && db-migrate db:drop udacity_test",
     "tsc": "tsc"
   },
   "author": "Udacity",
@@ -44,6 +44,7 @@
     "jasmine": "^3.6.4",
     "jasmine-spec-reporter": "^6.0.0",
     "jasmine-ts": "^0.3.0",
+    "supertest": "^6.3.3",
     "ts-node": "^9.1.1",
     "tsc-watch": "^4.2.9"
   },
