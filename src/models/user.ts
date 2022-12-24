@@ -1,5 +1,6 @@
 import client from '../database'
 import dotenv from 'dotenv'
+import bcrypt from 'bcrypt'
 
 dotenv.config()
 
@@ -17,12 +18,13 @@ const {
 
 export interface User {
   id?: number
-  firstName: string
-  lastName: string
-  password: string | number
+  username: string | number
+  firstName?: string
+  lastName?: string
+  password?: string | number
 }
 
-export class UserAccount {
+export class UsersAccount {
   async index (): Promise<User[]> {
     try {
       const conn = await client.connect()
@@ -36,44 +38,70 @@ export class UserAccount {
   }
 }
 
-/*
-export class UserSignin {
-  async authenticate(username: string, password: string): Promise<User | null> {
+export class CreateUser {
+  username: string | number
+  firstName: string
+  lastName: string
+  password: string | number
+  users!: string[]
+ 
+  constructor(username: string | number, firstName: string, lastName: string, password: string | number) {
+    this.username = username
+    this.firstName = firstName
+    this.lastName = lastName
+    this.password = password
+  }
+
+  async create(u: User): Promise<User> {
     try {
+
+      u.username = this.username
+      u.firstName = this.firstName
+      u.lastName = this.lastName
+      u.password = this.password
+
+      // @ts-ignore
       const conn = await client.connect()
-      const sql = 'SELECT password FROM users WHERE username=($1)'
-      console.log(password+pepper)
-      if (resulte.rows.length) {
-        const user = resulte.row[0]
-        console.log(user)
-        if (bcrypt.compareSync(password+pepper, user.password)) {
-          return user
-        }
+      const sql = 'INSERT INTO users (username, firstName, lastName, password) VALUES ($1, $2, $3, $4) RETURNING *'
+      const getSql = 'GET * FROM users'
+
+      const hash = bcrypt.hashSync(
+        u.password + String(BCRYPT_PASSWORD), 
+        parseInt(String(SALT_ROUNDS))
+      )
+
+      const result = await conn.query(sql, [u.username, u.firstName, u.lastName, hash])
+      const getall = await conn.query(getSql)
+      const user = result.rows[0]
+
+      conn.release()
+      return user
+    } catch(user) {
+      throw new Error(`unable create user (${u.username}): ${user}`)
+      } 
+  }
+}
+
+export class Login {
+  async authenticate(username: string, password: string): Promise<User | null> {
+    const conn = await client.connect()
+    const sql = 'SELECT password_digest FROM users WHERE username=($1)'
+
+    const result = await conn.query(sql, [username])
+
+    console.log(password+BCRYPT_PASSWORD)
+
+    if(result.rows.length) {
+
+      const user = result.rows[0]
+
+      console.log(user)
+
+      if (bcrypt.compareSync(password+BCRYPT_PASSWORD, user.password_digest)) {
+        return user
       }
-      return null
-    } catch (err) {
-      throw new Error(`Can't Signin ${err}`)
     }
-  }
-}
 
-const show = async (_req: Request, res: Response) => {
-  const user = await store.show(_req.body.id)
-  res.json(user)
-}
-
-const create = async (_req: Request, res: Response) => {
-  const user: User = {
-    username: _req.body.username,
-    password: _req.body.password
-  }
-  try {
-    const newUser = await store.create(user)
-    var token = jwt.sign({user: newUser}, process.env.TOKEN_SECRET)
-    res.json(token)
-  } catch (err) {
-    res.status(400)
-    res.json(err + user)
+    return null
   }
 }
-*/

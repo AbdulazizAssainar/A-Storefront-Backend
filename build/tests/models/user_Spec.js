@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const user_1 = require("../../models/user");
-const user = new user_1.UserAccount();
+const user = new user_1.UsersAccount();
 describe('User Model', () => {
     beforeAll(function () {
         //jasmine.DEFAULT_TIMEOUT_INTERVAL = 999999;

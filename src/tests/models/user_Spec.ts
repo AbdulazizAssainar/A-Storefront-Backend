@@ -1,6 +1,6 @@
-import { User, UserAccount } from '../../models/user'
+import { User, UsersAccount } from '../../models/user'
 
-const user = new UserAccount()
+const user = new UsersAccount()
 
 describe('User Model', () => {
   beforeAll(function() {
