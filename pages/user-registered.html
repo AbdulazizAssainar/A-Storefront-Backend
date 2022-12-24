@@ -1,0 +1,14 @@
+<link rel="stylesheet" href="/pages/style/main.css">
+
+<script>
+    function redirect() {
+        alert("test")
+        setTimeout(function () {
+            window.location.replace("/login");
+        }, 5000);
+    }
+</script>
+
+<body onload="redirect()">
+    <a>user registered successfully, you will be redirected to login page in 5seconds</a>
+</body>

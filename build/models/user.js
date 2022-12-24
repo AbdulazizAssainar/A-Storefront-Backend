@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Login = exports.CreateUser = exports.UsersAccount = void 0;
+exports.Authenticate = exports.CreateUser = exports.UsersAccount = void 0;
 const database_1 = __importDefault(require("../database"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
@@ -54,20 +54,24 @@ class CreateUser {
     }
 }
 exports.CreateUser = CreateUser;
-class Login {
-    async authenticate(username, password) {
+class Authenticate {
+    constructor(username, password) {
+        this.username = username;
+        this.password = password;
+    }
+    async authenticate() {
         const conn = await database_1.default.connect();
         const sql = 'SELECT password_digest FROM users WHERE username=($1)';
-        const result = await conn.query(sql, [username]);
-        console.log(password + BCRYPT_PASSWORD);
+        const result = await conn.query(sql, [this.username]);
+        console.log(this.password + BCRYPT_PASSWORD);
         if (result.rows.length) {
             const user = result.rows[0];
             console.log(user);
-            if (bcrypt_1.default.compareSync(password + BCRYPT_PASSWORD, user.password_digest)) {
+            if (bcrypt_1.default.compareSync(this.password + BCRYPT_PASSWORD, user.password_digest)) {
                 return user;
             }
         }
         return null;
     }
 }
-exports.Login = Login;
+exports.Authenticate = Authenticate;

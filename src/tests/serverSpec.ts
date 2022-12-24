@@ -1,6 +1,6 @@
 import express, { request } from 'express'
-import login from '../routes/api/login';
-import signup from '../routes/api/signup';
+import login from '../routes/api/authenticate';
+import signup from '../routes/api/register';
 
 const app = express.Router();
 

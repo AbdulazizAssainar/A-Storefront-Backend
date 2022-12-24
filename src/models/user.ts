@@ -82,14 +82,23 @@ export class CreateUser {
   }
 }
 
-export class Login {
-  async authenticate(username: string, password: string): Promise<User | null> {
+export  class  Authenticate {
+  username: string | number
+  password: string | number
+  users!: string[]
+ 
+  constructor(username: string | number, password: string | number) {
+    this.username = username
+    this.password = password
+  }
+
+  async authenticate(): Promise<User | null> {
     const conn = await client.connect()
     const sql = 'SELECT password_digest FROM users WHERE username=($1)'
 
-    const result = await conn.query(sql, [username])
+    const result = await conn.query(sql, [this.username])
 
-    console.log(password+BCRYPT_PASSWORD)
+    console.log(this.password+BCRYPT_PASSWORD!)
 
     if(result.rows.length) {
 
@@ -97,7 +106,7 @@ export class Login {
 
       console.log(user)
 
-      if (bcrypt.compareSync(password+BCRYPT_PASSWORD, user.password_digest)) {
+      if (bcrypt.compareSync(this.password+BCRYPT_PASSWORD!, user.password_digest)) {
         return user
       }
     }
