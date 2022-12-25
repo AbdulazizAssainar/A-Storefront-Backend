@@ -4,7 +4,7 @@ const order_1 = require("../../models/order");
 const order = new order_1.OrderList();
 describe('Order Model', () => {
     beforeAll(function () {
-        //jasmine.DEFAULT_TIMEOUT_INTERVAL = 999999;
+        // jasmine.DEFAULT_TIMEOUT_INTERVAL = 999999;
     });
     it('should have an index method', () => {
         expect(order.index).toBeDefined();

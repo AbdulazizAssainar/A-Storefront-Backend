@@ -37,14 +37,27 @@ login.post('/', function (req, res) {
                 if (bcrypt_1.default.compareSync(password + BCRYPT_PASSWORD, user.password)) {
                     console.log('compareSync passed');
                     const token = jsonwebtoken_1.default.sign(user, TOKEN_SECRET, { expiresIn: "15m" });
-                    return res.status(200).send(JSON.stringify({ accessToken: token }));
+                    res.status(200).send(JSON.stringify({ accessToken: token }));
                 }
-                console.log('compareSync error');
+                else {
+                    console.log('compareSync error');
+                }
             }
             else {
                 console.log("User doesn't exists");
             }
         }); //connection.query()
     }); //client.connect()
+    const authHeader = req.headers["authorization"];
+    const token = authHeader && authHeader.split(" ")[1];
+    if (token == null) {
+        res.status(401).send(); // Unauthorized
+    }
+    var decoded = jsonwebtoken_1.default.verify(token, TOKEN_SECRET, (err, user) => {
+        if (err) {
+            res.status(403).send(); // Forbidden
+        }
+    });
+    return;
 });
 exports.default = login;

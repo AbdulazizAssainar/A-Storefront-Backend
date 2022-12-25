@@ -9,10 +9,7 @@ const {
   POSTGRES_TEST_DB,
   POSTGRES_USER,
   POSTGRES_PASSWORD,
-  ENV,
-  BCRYPT_PASSWORD,
-  SALT_ROUNDS,
-  TOKEN_SECRET
+  ENV
 } = process.env
 
 const env = ENV

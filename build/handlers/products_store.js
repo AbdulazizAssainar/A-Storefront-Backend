@@ -6,7 +6,7 @@ const index = async (_req, res) => {
     const products = await store.index();
     res.json(products);
 };
-const product_routes = (app) => {
+const productRoutes = (app) => {
     app.get('/products', index);
 };
-exports.default = product_routes;
+exports.default = productRoutes;

@@ -4,7 +4,7 @@ const product_1 = require("../../models/product");
 const store = new product_1.ProductStore();
 describe('Product Model', () => {
     beforeAll(function () {
-        //jasmine.DEFAULT_TIMEOUT_INTERVAL = 999999;
+        // jasmine.DEFAULT_TIMEOUT_INTERVAL = 999999;
     });
     it('should have an index method', () => {
         expect(store.index).toBeDefined();

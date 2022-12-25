@@ -9,14 +9,14 @@ const address: string = 'localhost:3000'
 
 const corsOptions = {
   origin: 'http://test.com',
-  OptionSuccessStatus: 200 
+  OptionSuccessStatus: 200
 }
 
 app.use(cors(corsOptions))
 app.use(bodyParser.json())
 app.use('/', routes)
-app.use('/test-cors', cors(corsOptions), function(req, res, next) {
-  res.json({msg:'This is CORS-enabled with middile ware'})
+app.use('/test-cors', cors(corsOptions), function (req, res, next) {
+  res.json({ msg: 'This is CORS-enabled with middile ware' })
 })
 
 product_routes(app)

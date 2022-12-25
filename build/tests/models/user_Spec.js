@@ -4,7 +4,7 @@ const user_1 = require("../../models/user");
 const user = new user_1.UsersAccount();
 describe('User Model', () => {
     beforeAll(function () {
-        //jasmine.DEFAULT_TIMEOUT_INTERVAL = 999999;
+        // jasmine.DEFAULT_TIMEOUT_INTERVAL = 999999;
     });
     it('should have an index method', () => {
         expect(user.index).toBeDefined();

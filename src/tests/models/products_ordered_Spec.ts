@@ -1,10 +1,10 @@
-import { OrderedProduct, OrderedProductList } from '../../models/products_ordered'
+import { OrderedProductList } from '../../models/products_ordered'
 
 const ordered = new OrderedProductList()
 
 describe('Ordered Products Model', () => {
-  beforeAll(function() {
-      //jasmine.DEFAULT_TIMEOUT_INTERVAL = 999999;
+  beforeAll(function () {
+    // jasmine.DEFAULT_TIMEOUT_INTERVAL = 999999;
   })
   it('should have an index method', () => {
     expect(ordered.index).toBeDefined()
@@ -13,4 +13,5 @@ describe('Ordered Products Model', () => {
     const result = await ordered.index()
     expect(result).toEqual([])
   })
+  return
 })

@@ -1,10 +1,10 @@
-import { Order, OrderList } from '../../models/order'
+import { OrderList } from '../../models/order'
 
 const order = new OrderList()
 
 describe('Order Model', () => {
-  beforeAll(function() {
-      //jasmine.DEFAULT_TIMEOUT_INTERVAL = 999999;
+  beforeAll(function () {
+    // jasmine.DEFAULT_TIMEOUT_INTERVAL = 999999;
   })
   it('should have an index method', () => {
     expect(order.index).toBeDefined()

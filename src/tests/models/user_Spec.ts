@@ -1,10 +1,10 @@
-import { User, UsersAccount } from '../../models/user'
+import { UsersAccount } from '../../models/user'
 
 const user = new UsersAccount()
 
 describe('User Model', () => {
-  beforeAll(function() {
-      //jasmine.DEFAULT_TIMEOUT_INTERVAL = 999999;
+  beforeAll(function () {
+    // jasmine.DEFAULT_TIMEOUT_INTERVAL = 999999;
   })
   it('should have an index method', () => {
     expect(user.index).toBeDefined()

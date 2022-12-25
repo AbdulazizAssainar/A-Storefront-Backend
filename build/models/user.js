@@ -8,7 +8,7 @@ const database_1 = __importDefault(require("../database"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
 dotenv_1.default.config();
-const { POSTGRES_HOST, POSTGRES_DB, POSTGRES_TEST_DB, POSTGRES_USER, POSTGRES_PASSWORD, ENV, BCRYPT_PASSWORD, SALT_ROUNDS, TOKEN_SECRET } = process.env;
+const { BCRYPT_PASSWORD, SALT_ROUNDS } = process.env;
 class UsersAccount {
     async index() {
         try {
@@ -37,12 +37,16 @@ class CreateUser {
             u.firstName = this.firstName;
             u.lastName = this.lastName;
             u.password = this.password;
-            // @ts-ignore
             const conn = await database_1.default.connect();
             const sql = 'INSERT INTO users (username, firstName, lastName, password) VALUES ($1, $2, $3, $4) RETURNING *';
             const getSql = 'GET * FROM users';
             const hash = bcrypt_1.default.hashSync(u.password + String(BCRYPT_PASSWORD), parseInt(String(SALT_ROUNDS)));
-            const result = await conn.query(sql, [u.username, u.firstName, u.lastName, hash]);
+            const result = await conn.query(sql, [
+                u.username,
+                u.firstName,
+                u.lastName,
+                hash
+            ]);
             const getall = await conn.query(getSql);
             const user = result.rows[0];
             conn.release();
@@ -64,7 +68,7 @@ class Authenticate {
         const sql = 'SELECT password_digest FROM users WHERE username=($1)';
         const result = await conn.query(sql, [this.username]);
         console.log(this.password + BCRYPT_PASSWORD);
-        if (result.rows.length) {
+        if (result.rows.length > 0) {
             const user = result.rows[0];
             console.log(user);
             if (bcrypt_1.default.compareSync(this.password + BCRYPT_PASSWORD, user.password_digest)) {

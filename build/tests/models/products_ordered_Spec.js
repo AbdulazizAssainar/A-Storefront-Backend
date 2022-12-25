@@ -4,7 +4,7 @@ const products_ordered_1 = require("../../models/products_ordered");
 const ordered = new products_ordered_1.OrderedProductList();
 describe('Ordered Products Model', () => {
     beforeAll(function () {
-        //jasmine.DEFAULT_TIMEOUT_INTERVAL = 999999;
+        // jasmine.DEFAULT_TIMEOUT_INTERVAL = 999999;
     });
     it('should have an index method', () => {
         expect(ordered.index).toBeDefined();
@@ -13,4 +13,5 @@ describe('Ordered Products Model', () => {
         const result = await ordered.index();
         expect(result).toEqual([]);
     });
+    return;
 });
