@@ -39,10 +39,12 @@ login.get('/', function (req, res) {
                 if (bcrypt_1.default.compareSync(password + BCRYPT_PASSWORD, user.password)) {
                     const token = jsonwebtoken_1.default.sign(user, TOKEN_SECRET, { expiresIn: '10d' });
                     console.log(JSON.stringify({ accessToken: token }));
-                    return res.setHeader('accessToken', token).redirect(`/account/${username}`);
+                    return res
+                        .setHeader('accessToken', token)
+                        .send('aaccessToken generated for 10 Days');
                 }
                 else {
-                    console.log("Wrong Password");
+                    console.log('Wrong Password');
                 }
             }
             else {

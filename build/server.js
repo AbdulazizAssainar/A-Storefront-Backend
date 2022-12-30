@@ -9,10 +9,11 @@ const body_parser_1 = __importDefault(require("body-parser"));
 const routes_1 = require("./routes");
 const products_store_1 = __importDefault(require("./handlers/products_store"));
 const app = (0, express_1.default)();
-const address = 'localhost:3000';
+const port = 3000;
+const address = `localhost:${port}`;
 const corsOptions = {
     origin: 'http://test.com',
-    OptionSuccessStatus: 200
+    OptionSuccessStatus: 200,
 };
 app.use((0, cors_1.default)(corsOptions));
 app.use(body_parser_1.default.json());
@@ -21,6 +22,6 @@ app.use('/test-cors', (0, cors_1.default)(corsOptions), function (req, res, next
     res.json({ msg: 'This is CORS-enabled with middile ware' });
 });
 (0, products_store_1.default)(app);
-app.listen(3000, function () {
+app.listen(port, function () {
     console.log(`starting app on: http://${address}`);
 });

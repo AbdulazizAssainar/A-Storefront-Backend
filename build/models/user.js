@@ -45,7 +45,7 @@ class CreateUser {
                 u.username,
                 u.firstName,
                 u.lastName,
-                hash
+                hash,
             ]);
             const getall = await conn.query(getSql);
             const user = result.rows[0];

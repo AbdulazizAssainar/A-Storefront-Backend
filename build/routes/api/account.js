@@ -3,6 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.authorization = void 0;
 const express_1 = __importDefault(require("express"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
@@ -10,9 +11,9 @@ dotenv_1.default.config();
 const { TOKEN_SECRET } = process.env;
 const account = (0, express_1.default)();
 account.get('/', function (req, res, next) {
-    console.log((req.url.split('?')[0]).slice(1));
-    console.log('test');
+    console.log(req.url.split('?')[0].slice(1));
     const authHeader = req.headers.authorization;
+    const username = req.url.split('?')[0].slice(1);
     const token = authHeader && authHeader.split(' ')[1];
     let userToken;
     try {
@@ -27,27 +28,16 @@ account.get('/', function (req, res, next) {
     }
     return res.redirect(`/account/${userToken}`);
 });
-account.get('/:username', function (req, res, next) {
-    const authHeader = req.headers.authorization;
-    const username = (req.url.split('?')[0]).slice(1);
-    console.log(username);
-    const token = authHeader && authHeader.split(' ')[1];
-    let userToken;
-    try {
-        const tokenParts = token.split('.');
-        const encodedPayload = tokenParts[1];
-        const rawPayload = atob(encodedPayload);
-        const user = JSON.parse(rawPayload);
-        userToken = user.username;
-        console.log(userToken);
-    }
-    catch (err) {
-        console.log(err);
-    }
-    if (userToken != username) {
-        console.log(userToken + ' != ' + username);
-        return res.redirect(`/login`);
-    }
+account.get('/:username', function (req, res) {
+    authorization(req, res, () => {
+        return res.status(200).send('this is your Account');
+    });
+});
+function authorization(req, res, next) {
+    //const headers = (req.headers.cookie)?.slice(12)
+    //return res.send(headers)
+    const authHeader = req.headers.cookie?.slice(12); //req.headers.authorization
+    const token = authHeader; //&& authHeader.split(' ')[1]
     if (token == null) {
         return res.status(401).send('Unauthorized'); // Unauthorized
     }
@@ -56,6 +46,12 @@ account.get('/:username', function (req, res, next) {
             return res.status(403).send('Forbidden'); // Forbidden
         }
     });
-    return res.status(200).send('this is your Account');
-});
+    const tokenParts = token.split('.');
+    const encodedPayload = tokenParts[1];
+    const rawPayload = atob(encodedPayload);
+    const user = JSON.parse(rawPayload);
+    const userToken = user.username;
+    next();
+}
+exports.authorization = authorization;
 exports.default = account;

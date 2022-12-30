@@ -56,7 +56,7 @@ register.get('/', async function (req, res) {
                     username,
                     firstname,
                     lastname,
-                    hash
+                    hash,
                 ]);
                 return res.sendFile(paths_1.pagesPath + '/user-registered.html'); // send redirect file
             }

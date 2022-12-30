@@ -1,0 +1,48 @@
+<link rel="stylesheet" href="/pages/style/main.css">
+<link rel="stylesheet" href="/pages/style/registration.css">
+<title>Cart</title>
+
+<script src="./cartFunctions">
+</script>
+
+<div class="login-box" style=" margin-left: -250px; ">
+  <h2>Add to Cart</h2>
+  <form action="" method="">
+    <div class="user-box">
+      <input type="text" id="id" required="">
+      <label>Product ID</label>
+    </div>
+    <div class="user-box">
+      <input type="text" id="amount" required="">
+      <label>Amount</label>
+    </div>
+    <a onclick="addToCart()" >
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <input class="login-box-trans" type="button" value="Add">
+    </a>
+  </form>
+</div>
+
+<div class="login-box" style="margin-left: 250px;">
+    <h2>Cart</h2>
+    <form action="/store/addproduct" method="get">
+      <div class="user-box">
+        <table style=" width: 95%; border-style: double; border-width: thin; " id="cartTable">
+            <td>ID</td>
+            <td>Name</td>
+            <td>Amount</td>
+          </tr>
+        </table>
+      </div>
+      <a onclick="pushLists()" >
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <input class="login-box-trans" type="button" value="Oreder">
+      </a>
+    </form>
+  </div>
