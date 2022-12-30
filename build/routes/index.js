@@ -10,6 +10,7 @@ const register_1 = __importDefault(require("./api/register"));
 const account_1 = __importDefault(require("./api/account"));
 const login_1 = __importDefault(require("./api/login"));
 const store_1 = __importDefault(require("./api/store"));
+const user_1 = __importDefault(require("./api/user"));
 const routes = (0, express_1.default)();
 exports.routes = routes;
 routes.get('/', function (req, res) {
@@ -17,6 +18,7 @@ routes.get('/', function (req, res) {
 });
 routes.use('/login', login_1.default);
 routes.use('/register', register_1.default);
+routes.use('/users', user_1.default);
 routes.use('/account', account_1.default);
 routes.use('/store', store_1.default);
 routes.get('/pages/style/main.css', (req, res) => {

@@ -4,6 +4,7 @@ import register from './api/register';
 import account from './api/account';
 import login from './api/login';
 import store from './api/store';
+import users from './api/user';
 
 const routes: express.Application = express();
 
@@ -13,6 +14,7 @@ routes.get('/', function (req: Request, res: Response) {
 
 routes.use('/login', login);
 routes.use('/register', register);
+routes.use('/users', users);
 routes.use('/account', account);
 routes.use('/store', store);
 

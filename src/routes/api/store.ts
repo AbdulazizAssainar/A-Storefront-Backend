@@ -12,24 +12,15 @@ store.get('/cart/cartFunctions', (req, res) => {
   res.sendFile(buildPath + '/models/cart.js');
 });
 
-store.get('/cart/Products', (req, res) => {
-  client.connect(async (err, connection) => {
-    const sqlProducts = 'SELECT * FROM Products';
-    const Products = await connection.query(sqlProducts);
-    let array = [];
-    for (var i = 0, row; (row = Products.rows[i]); i++) {
-      array.push(row);
-    }
-    res.send(array);
-  });
-});
-
-store.get('/', async function (req: Request, res: Response) {
+store.get('/cart/Products', async (req, res) => {
   const result = await productStore.index();
   return res.send(result);
 });
 
-store.get('/addproduct', async function (req: Request, res: Response) {
+store.get('/', async function (req: Request, res: Response) {
+});
+
+store.get('/addproduct', authorization, async function (req: Request, res: Response) {
   // get some data from url
   const name: string = String(req.query.name);
   const price: string = String(req.query.price);

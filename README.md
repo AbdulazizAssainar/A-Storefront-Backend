@@ -1,4 +1,4 @@
-# Storefront Backend Project
+# SCRYPTS
 
 ## 1. Test: to test the project by jasmine
 #### TERMINAL: `npm run test`
@@ -16,7 +16,39 @@
 - Migrate up
 - Run Server
 
+## 4. Build & Run: to build project 
+#### TERMINAL: `npm run build`
+- Build Project
 
+## 5. Build & Run: to run jasmine test 
+#### TERMINAL: `npm run jasmine`
+- Run Test
+
+## 5. Build & Run: to run jasmine test 
+#### TERMINAL: `npm run test`
+- Run Full Test
+
+## 5. Build & Run: to run eslint 
+#### TERMINAL: `npm run lint`
+- Clean Codes
+
+## 5. Build & Run: to run prettier 
+#### TERMINAL: `npm run prettier`
+- Clean Codes
+
+## 5. Build & Run: to clean codes 
+#### TERMINAL: `npm run clean`
+- Clean Codes 
+
+## 5. Build & Run: to clear test result
+#### TERMINAL: `npm run clear_test`
+- Clear Test Result
+
+## 5. Build & Run: 
+#### TERMINAL: `npm run watch`
+
+
+# Routes
 
 ## 1. Index route: home page
 #### URL: /
@@ -33,6 +65,9 @@
 - username
 - password
 
+## 2. Users route: veiw all users account (view only)
+#### URL: /users
+
 ## 3. Store route: Store page (view only)
 #### URL: /store
 - products json list
@@ -47,11 +82,13 @@
 - price
 - category (related to Catagory Data Table using ID)
 
-      console.log('name is undefined');
-    if (price == 'undefined') {
-    if (category == 'undefined') {
-
 ## 6. Cart route: 
 #### URL: /store/cart?products=[`product1_id, product2_id`]&amounts[`product1_amount, product2_amount`]
 - Products id (related to Products Data Table using ID)
 - Amounts
+
+# Setup db and server instructions
+
+## Server Port: 3000
+## Databast Port: 5432
+

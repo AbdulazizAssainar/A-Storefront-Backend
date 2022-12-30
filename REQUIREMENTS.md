@@ -1,42 +1,64 @@
-# API Requirements
-The company stakeholders want to create an online storefront to showcase their great product ideas. Users need to be able to browse an index of all products, see the specifics of a single product, and add products to an order that they can view in a cart page. You have been tasked with building the API that will support this application, and your coworker is building the frontend.
+# Environment variables
+    POSTGRES_HOST = localhost
+    POSTGRES_PORT = 5432
+    POSTGRES_DB = udacity
+    POSTGRES_TEST_DB = udacity_test
+    POSTGRES_USER = postgres
+    POSTGRES_PASSWORD = Kunhi-1234
+    ENV = div
+    BCRYPT_PASSWORD = speak-freind-and-ented
+    SALT_ROUNDS = 10
+    TOKEN_SECRET = 4dafa9b46860fa6ff97c7a148640a8d3f878655f8830d0469117245fe68351bb2a12e8755a230614651a290886a67995157140597b29dea2cd7e7c796d6fe89a
+    REFRESH_TOKEN = fe372c8136fde36a3151ba17903b00d623b442fd1afa8e0824c0cb8b3965e4b546e5a318c23a40ece20284a82332e0b63ec49a4e35491ff51d0dcb688d0b0be8
 
-These are the notes from a meeting with the frontend developer that describe what endpoints the API needs to supply, as well as data shapes the frontend and backend have agreed meet the requirements of the application. 
+# Packages instructions
 
-## API Endpoints
-#### Products
-- Index 
-- Show
-- Create [token required]
-- [OPTIONAL] Top 5 most popular products 
-- [OPTIONAL] Products by category (args: product category)
+    yarn install @types/bcrypt
+    yarn install @types/body-parser
+    yarn install @types/cors
+    yarn install @types/express
+    yarn install @types/jsonwebtoken
+    yarn install @types/react
+    yarn install bcrypt
+    yarn install body-parser
+    yarn install cors
+    yarn install express
+    yarn install jsonwebtoken
+    yarn install react
+    yarn install typescript
+    yarn install -D @types/dotenv
+    yarn install -D  @types/jasmine
+    yarn install -D  @types/jest
+    yarn install -D  @types/node
+    yarn install -D  @types/pg
+    yarn install -D  db-migrate
+    yarn install -D  db-migrate-pg
+    yarn install -D  eslint
+    yarn install -D  eslint-plugin-react
+    yarn install -D  jasmine
+    yarn install -D  jasmine-spec-reporter
+    yarn install -D  prettier
 
-#### Users
-- Index [token required]
-- Show [token required]
-- Create N[token required]
+# Database: create a json file called "database"
+## database.json
+    {
+        "dev": {
+            "driver": "pg",
+            "host": "localhost",
+            "database": "udacity",
+            "user": "postgres",
+            "password": "Your Password"
+        },
+        "test": {
+            "driver": "pg",
+            "host": "localhost",
+            "database": "udacity_test",
+            "user": "postgres",
+            "password": "Your Password"
+        }
+    }
 
-#### Orders
-- Current Order by user (args: user id)[token required]
-- [OPTIONAL] Completed Orders by user (args: user id)[token required]
 
-## Data Shapes
-#### Product
--  id
-- name
-- price
-- [OPTIONAL] category
-
-#### User
-- id
-- firstName
-- lastName
-- password
-
-#### Orders
-- id
-- id of each product in the order
-- quantity of each product in the order
-- user_id
-- status of order (active or complete)
-
+# Server
+## Server Port: 3000
+## Databast Port: 5432

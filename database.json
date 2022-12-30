@@ -1,16 +1,16 @@
 {
-    "dev": {
-      "driver": "pg",
-      "host": "localhost",
-      "database": "udacity",
-      "user": "postgres",
-      "password": "Kunhi-1234"
-    },
-    "test": {
-      "driver": "pg",
-      "host": "localhost",
-      "database": "udacity_test",
-      "user": "postgres",
-      "password": "Kunhi-1234"
-    }
+  "dev": {
+    "driver": "pg",
+    "host": "localhost",
+    "database": "udacity",
+    "user": "postgres",
+    "password": "Kunhi-1234"
+  },
+  "test": {
+    "driver": "pg",
+    "host": "localhost",
+    "database": "udacity_test",
+    "user": "postgres",
+    "password": "Kunhi-1234"
   }
+}

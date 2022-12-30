@@ -5,15 +5,14 @@
   "main": "server.ts",
   "scripts": {
     "build": "npx tsc",
-    "start": "npm run build && db-migrate up && node build/server.js",
-    "prettier": "prettier --config .prettierrc src/**/*.ts --write",
+    "jasmine": "npm run build &&  jasmine",
     "lint": "eslint . --ext .ts --fix --quiet",
     "clean": "npm run prettier && npm run lint",
-    "jasmine": "npm run build &&  jasmine",
-    "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess \"node ./dist/server.js\"",
     "clear_test": "db-migrate db:drop udacity_test",
-    "test": "npm run clear_test && db-migrate db:create udacity_test && set ENV=test && db-migrate --env test up && npm run jasmine && npm run clear_test",
-    "tsc": "tsc"
+    "prettier": "prettier --config .prettierrc src/**/*.ts --write",
+    "start": "npm run build && db-migrate up && node build/server.js",
+    "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess \"node ./dist/server.js\"",
+    "test": "npm run clear_test && db-migrate db:create udacity_test && set ENV=test && db-migrate --env test up && npm run jasmine && npm run clear_test"
   },
   "author": "Udacity",
   "license": "ISC",
