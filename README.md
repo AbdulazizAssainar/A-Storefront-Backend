@@ -67,10 +67,16 @@
 
 ## 2. Users route: veiw all users account (view only)
 #### URL: /users
+- users json list
 
 ## 3. Store route: Store page (view only)
 #### URL: /store
 - products json list
+- catagories json list
+#### URL: /products
+- products json list
+#### URL: /catagroies
+- catagroies json list
 
 ## 4. Add Catagory route: 
 #### URL: /store/addcatagory?name=`Catagory Name`
@@ -88,6 +94,17 @@
 - Amounts
 
 # Setup db and server instructions
+**Create user**
+    '''sh
+    CREATE USER udacity_user WITH PASSWORD 'Kunhi-1234';
+    
+    #Or, via SQL qeury
+    CREATE DATABASE udacity_db;
+    CREATE DATABASE udacity_test_db;
+
+    '''sh
+    GRANT ALL PRIVILEGES ON DATABASE udacity_db TO udacity_user;
+    GRANT ALL PRIVILEGES ON DATABASE udacity_test_db TO udacity_user;
 
 ## Server Port: 3000
 ## Databast Port: 5432

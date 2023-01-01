@@ -1,23 +1,35 @@
-import { ProductStore } from '../../models/product';
 import express, { Request, Response } from 'express';
 import client from '../../database';
 import { buildPath, pagesPath } from '../../utilities/paths';
 import { TableHTMLAttributes } from 'react';
 import { authorization } from './account';
+import { ProductStore } from '../../models/product';
+import { CatagoryStore } from '../../models/catagory';
 
 const productStore = new ProductStore();
+const catagoryStore = new CatagoryStore();
 const store: express.Application = express();
 
 store.get('/cart/cartFunctions', (req, res) => {
   res.sendFile(buildPath + '/models/cart.js');
 });
 
-store.get('/cart/Products', async (req, res) => {
-  const result = await productStore.index();
-  return res.send(result);
+store.get('/', async function (req: Request, res: Response) {
+  const productStoreindex = await productStore.index();
+  const _productStore = JSON.stringify(productStoreindex);
+  const catagoryStoreindex = await catagoryStore.index();
+  const _catagoryStore = JSON.stringify(catagoryStoreindex);
+  return res.send("Catagroies: " + _catagoryStore + "Products: " + _productStore);
 });
 
-store.get('/', async function (req: Request, res: Response) {
+store.get('/products', async function (req: Request, res: Response) {
+  const index = await productStore.index();
+  return res.send(index);
+});
+
+store.get('/catagroies', async function (req: Request, res: Response) {
+  const index = await catagoryStore.index();
+  return res.send(index);
 });
 
 store.get('/addproduct', authorization, async function (req: Request, res: Response) {
@@ -42,7 +54,7 @@ store.get('/addproduct', authorization, async function (req: Request, res: Respo
     }
 
     const sqlSearch = 'SELECT * FROM products WHERE name = $1';
-    const sqlCatagory = 'SELECT * FROM catagory WHERE name = $1';
+    const sqlCatagory = 'SELECT * FROM catagory WHERE id = $1';
     const sqlInsert =
       'INSERT INTO products (name , price, category) VALUES ($1, $2, $3) RETURNING *';
 
@@ -51,7 +63,6 @@ store.get('/addproduct', authorization, async function (req: Request, res: Respo
       if (err) throw err;
 
       if (result.rowCount != 0) {
-        // if username already registered
         console.log('Product Found');
         return res.send('Product already found');
       } else {
@@ -59,12 +70,7 @@ store.get('/addproduct', authorization, async function (req: Request, res: Respo
           if (result.rowCount == 0) {
             return res.send('Catagory not found');
           } else {
-            // Create new user
-            const result = await connection.query(sqlInsert, [
-              name,
-              price,
-              category,
-            ]);
+            await connection.query(sqlInsert, [name, price, category])
             return res.send('Product Added');
           }
         });
@@ -75,7 +81,7 @@ store.get('/addproduct', authorization, async function (req: Request, res: Respo
   return;
 });
 
-store.get('/addcatagory', async function (req: Request, res: Response) {
+store.get('/addcatagory', authorization, async function (req: Request, res: Response) {
   // get some data from url
   const name: string = String(req.query.name);
 
@@ -110,8 +116,8 @@ store.get('/addcatagory', async function (req: Request, res: Response) {
 
 store.get('/cart', authorization, async function (req: Request, res: Response) {
   //get username from token
-  const authHeader = req.headers.cookie?.slice(12); //req.headers.authorization
-  const token = authHeader; //&& authHeader.split(' ')[1]
+  const authHeader = req.headers.authorization;
+  const token = authHeader && authHeader.split(' ')[1]
   const tokenParts = token!.split('.');
   const encodedPayload = tokenParts[1];
   const rawPayload = atob(encodedPayload);
@@ -119,30 +125,31 @@ store.get('/cart', authorization, async function (req: Request, res: Response) {
   const useridToken = user.id;
 
   // get some data from url
-  const products: string = String(req.query.products);
-  const amounts: string = String(req.query.amounts);
+  const order: string = String(req.query.order);
 
   client.connect(async (err, connection) => {
     // if any data in undefined return registration file
-    if (products == 'undefined') {
-      console.log('products is undefined');
-      return res.sendFile(pagesPath + '/createOrder.html');
-    }
-    if (amounts == 'undefined') {
-      console.log('amounts is undefined');
+    if (order == 'undefined') {
+      console.log('order is undefined');
       return res.sendFile(pagesPath + '/createOrder.html');
     }
 
-    const productsList: string[] = JSON.parse(`[${products}]`);
-    const amountsList: string[] = JSON.parse(`[${amounts}]`);
-    const sqlOrder =
-      'INSERT INTO orders (user_id, status, product, amount) VALUES ($1, $2, $3, $4)';
-    const result = await connection.query(sqlOrder, [
-      useridToken,
-      true,
-      products,
-      amounts,
-    ]);
+    const orderList: string[] = JSON.parse(`[${order}]`);
+    
+    const sqlCreateOrder = 'INSERT INTO orders (status) VALUES ($1)';
+    const sqlOrderid = 'SELECT id FROM orders ORDER BY id DESC LIMIT 1';
+    const sqlOrder = 'INSERT INTO order_products (user_id, order_id, product_id, quantity) VALUES ($1, $2, $3, $4)';
+
+    connection.query(sqlCreateOrder, [1])
+    const query = await connection.query(sqlOrderid)
+    const stringify = JSON.stringify(query.rows)
+    const orderID = stringify.substring(9, stringify.length -4)
+
+    for (var i = 0; i < orderList.length; i++) {
+      const product_id = orderList[i][0]
+      const quantity = orderList[i][1]
+      await connection.query(sqlOrder, [useridToken, orderID, product_id, quantity])
+    }
     return res.send('done');
   }); // client.connect()
 });

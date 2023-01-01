@@ -35,10 +35,8 @@ account.get('/:username', function (req: Request, res: Response) {
 });
 
 export function authorization(req: Request, res: Response, next: Function) {
-  //const headers = (req.headers.cookie)?.slice(12)
-  //return res.send(headers)
-  const authHeader = req.headers.cookie?.slice(12); //req.headers.authorization
-  const token = authHeader; //&& authHeader.split(' ')[1]
+  const authHeader = req.headers.authorization
+  const token = authHeader && authHeader.split(' ')[1]
 
   if (token == null) {
     return res.status(401).send('Unauthorized'); // Unauthorized

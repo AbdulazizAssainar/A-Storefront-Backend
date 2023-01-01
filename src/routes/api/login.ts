@@ -4,6 +4,7 @@ import client from '../../database';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
+import axios from 'axios';
 dotenv.config();
 const { BCRYPT_PASSWORD, TOKEN_SECRET } = process.env;
 
@@ -40,6 +41,10 @@ login.get('/', function (req: Request, res: Response) {
         if (bcrypt.compareSync(password + BCRYPT_PASSWORD!, user.password)) {
           const token = jwt.sign(user, TOKEN_SECRET!, { expiresIn: '10d' });
           console.log(JSON.stringify({ accessToken: token }));
+          axios.interceptors.request.use(req => {
+            req.headers!.authorization = token;
+            return req;
+          });
           return res
             .setHeader('accessToken', token)
             .send('aaccessToken generated for 10 Days');

@@ -27,8 +27,7 @@ function pushLists() {
   ) as HTMLTableElement;
   const ID = Number((document.getElementById('id') as HTMLInputElement)!.value);
   const Amount = (document.getElementById('amount') as HTMLInputElement)!.value;
-  let arrayID = pushList(table, 0, 'products', true);
-  let arrayAmount = pushList(table, 0, 'amounts', false);
+  pushList(table, 'order');
   clearPage(table);
   window.location.reload();
   return;
@@ -36,24 +35,20 @@ function pushLists() {
 
 function pushList(
   table: HTMLTableElement,
-  cellIndex: number,
   title: string,
-  isFrist: boolean
 ) {
   const rowCount = Number(table.rows.length) - 1;
-  let rowIndex = 0;
   let array = [];
-  const cells = table.querySelectorAll('tr');
   for (var i = 1, row; (row = table.rows[i]); i++) {
-    rowIndex = rowIndex + 1;
-    array.push(rowIndex);
+    const product = row.cells[0].innerHTML.toString()
+    const quantity = row.cells[2].innerHTML.toString()
+    const order = `[${product}, ${quantity}]`
+    array.push(order);
   }
   const arrayString = String(array);
   const url = window.location.href;
 
-  let nextURL;
-  if (isFrist == true) nextURL = `${url}?`;
-  else nextURL = `${url}&`;
+  let nextURL = `${url}?`;
 
   nextURL = `${nextURL}${title}=${arrayString}`;
 
@@ -75,7 +70,7 @@ function clearPage(table: HTMLTableElement) {
 
 async function getTable() {
   let table: HTMLTableElement;
-  const fetchTable = await fetch('/store').then((r) => r.json());
+  const fetchTable = await fetch('/store/products').then((r) => r.json());
   for (var i = 0; i < fetchTable.length; i++) {
     array.push(fetchTable[i]);
   }

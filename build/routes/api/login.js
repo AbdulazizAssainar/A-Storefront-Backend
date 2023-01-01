@@ -9,6 +9,7 @@ const database_1 = __importDefault(require("../../database"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
+const axios_1 = __importDefault(require("axios"));
 dotenv_1.default.config();
 const { BCRYPT_PASSWORD, TOKEN_SECRET } = process.env;
 const login = (0, express_1.default)();
@@ -39,6 +40,10 @@ login.get('/', function (req, res) {
                 if (bcrypt_1.default.compareSync(password + BCRYPT_PASSWORD, user.password)) {
                     const token = jsonwebtoken_1.default.sign(user, TOKEN_SECRET, { expiresIn: '10d' });
                     console.log(JSON.stringify({ accessToken: token }));
+                    axios_1.default.interceptors.request.use(req => {
+                        req.headers.authorization = token;
+                        return req;
+                    });
                     return res
                         .setHeader('accessToken', token)
                         .send('aaccessToken generated for 10 Days');
