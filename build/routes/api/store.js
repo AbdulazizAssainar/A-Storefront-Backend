@@ -76,7 +76,7 @@ store.get('/addproduct', account_1.authorization, async function (req, res) {
     }); // client.connect()
     return;
 });
-store.get('/addcatagory', async function (req, res) {
+store.get('/addcatagory', account_1.authorization, async function (req, res) {
     // get some data from url
     const name = String(req.query.name);
     database_1.default.connect(async (err, connection) => {

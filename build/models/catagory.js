@@ -15,7 +15,7 @@ class CatagoryStore {
             return result.rows;
         }
         catch (err) {
-            throw new Error(`Cannot get Catagorys ${err}`);
+            throw new Error(`Cannot get Catagoreis ${err}`);
         }
     }
 }

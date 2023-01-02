@@ -1,6 +1,6 @@
-import client from '../database';
 import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
+import client from '../database';
 
 export interface Catagory {
   id?: Number;
@@ -16,7 +16,7 @@ export class CatagoryStore {
       conn.release();
       return result.rows;
     } catch (err) {
-      throw new Error(`Cannot get Catagorys ${err}`);
+      throw new Error(`Cannot get Catagoreis ${err}`);
     }
   }
 }

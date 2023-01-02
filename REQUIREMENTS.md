@@ -39,6 +39,11 @@
     yarn install -D  jasmine-spec-reporter
     yarn install -D  prettier
 
+
+# Server
+## Server Port: 3000
+## Databast Port: 5432
+
 # Database: create a json file called "database"
 ## database.json
     {
@@ -57,8 +62,39 @@
             "password": "Your Password"
         }
     }
+#####
+#####
+## DB Schema
+    CREATE TABLE users (
+        id SERIAL PRIMARY KEY,
+        username VARCHAR(50),
+        firstName VARCHAR(50),
+        lastName VARCHAR(50),
+        password VARCHAR(500)
+        );
 
+    CREATE TABLE catagory (
+        id SERIAL PRIMARY KEY,
+        name VARCHAR(100)
+        );
 
-# Server
-## Server Port: 3000
-## Databast Port: 5432
+    CREATE TABLE products (
+        id SERIAL PRIMARY KEY,
+        name VARCHAR(100),
+        price integer,
+        category integer REFERENCES catagory(id),
+        sales integer
+        );
+
+    CREATE TABLE orders (
+        id SERIAL PRIMARY KEY,
+        status boolean
+        );
+
+    CREATE TABLE order_products (
+        id SERIAL PRIMARY KEY,
+        user_id integer REFERENCES users(id),
+        order_id integer REFERENCES users(id),
+        product_id integer REFERENCES products(id),
+        quantity  VARCHAR(20)
+        );
